@@ -33,9 +33,10 @@ const todoReducer = (state = initialState, action) => {
                 ]
             };
         case TOGGLE_TODO_STATUS: 
-            const currentTodo = state.dataSource.find((todo) => todo.id === action.payload);
-            currentTodo.completed = !currentTodo.completed;
-            return state;
+            return {
+                ...state, 
+                dataSource: state.dataSource.map((todo) => (todo.id === action.payload ? {...todo, completed: !todo.completed} : todo))
+            }
         default: return state;
     }
 }

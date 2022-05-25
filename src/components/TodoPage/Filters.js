@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 const { Search } = Input;
 
 function Filters(props) {
-  const {searchFilterChanged, statusFilterChanged, prioritiesFilter} = props;
+  const {searchFilterChanged, statusFilterChanged, prioritiesFilterChanged} = props;
   const [searchText, setSearchText] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
   const [filterPriority, setFilterPriority] = useState([]);
