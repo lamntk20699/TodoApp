@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Col, Row, Input, Button, Select, Tag } from "antd";
+import { Col, Row, Input, Button, Select, Tag, Divider } from "antd";
 import Todo from "./Todo";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo } from "../../redux/todoSlice";
+import { addTodo, deleteTodo } from "../../redux/todoSlice";
 import { todoSearchSelector } from "../../redux/selector";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 export default function TodoList() {
   const [todoName, setTodoName] = useState("");
@@ -12,6 +13,17 @@ export default function TodoList() {
 
   const dispatch = useDispatch();
   const todoLists = useSelector(todoSearchSelector);
+
+  axios({
+    method: 'get',
+    url: 'https://627c783ebf2deb7174db0631.mockapi.io/todo/data/accounts/1/todoList',
+    data: null,
+    responseType: 'stream'
+  }).then(res => {
+    console.log(res.data);
+  }).catch(err => {
+    console.log(err);
+  })
 
   const handleAddClicked = () => {
     const addedData = {
@@ -26,9 +38,18 @@ export default function TodoList() {
     setPriority("Medium");
   };
 
+  const handleDeleteClicked =() => {
+    console.log('Deleted');
+    dispatch(deleteTodo());
+  }
+
   return (
-    <Row style={{ height: "calc(100% - 40px)" }}>
-      <Col span={24} style={{ height: "calc(100% - 40px)", overflowY: "auto" }}>
+    <Row style={{ height: "calc(100% - 90px)" }}>
+      <Col span={24} style={{ height: "20px"}}>
+        <Button type="primary" onClick={handleDeleteClicked}>Delete</Button>
+      </Col>
+      <Divider/>
+      <Col span={24} style={{ height: "calc(100% - 90px)", overflowY: "auto" }}>
         {todoLists.map((todo) => (
           <Todo
             key={todo.id}

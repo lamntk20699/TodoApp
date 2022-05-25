@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-export const todoListSelector = (state) => state.todoList;
+export const todoListSelector = (state) => state.todoList.dataSource;
 export const searchTextSelector = (state) => state.filters.searchText;
 export const filterStatusSelector = (state) => state.filters.status;
 export const filterPrioritySelector = (state) => state.filters.priorities;
@@ -11,8 +11,8 @@ export const todoSearchSelector = createSelector(
   searchTextSelector,
   filterStatusSelector,
   filterPrioritySelector,
-  (todoList, searchText, status, priorities) => {
-    return todoList.filter((todo) => {
+  (dataSource, searchText, status, priorities) => {
+    return dataSource.filter((todo) => {
       if (status === "All") {
         return priorities.length
           ? todo.name.includes(searchText) && priorities.includes(todo.priority)

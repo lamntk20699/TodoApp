@@ -9,7 +9,7 @@ function TodoApp() {
   return (
     <div
       style={{
-        width: 500,
+        width: 800,
         margin: "0 auto",
         display: "flex",
         flexDirection: "column",
