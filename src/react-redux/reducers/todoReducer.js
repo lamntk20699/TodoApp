@@ -1,3 +1,5 @@
+import {ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO_STATUS} from "../actions/actionTypes";
+
 const initialState = {
     dataSource: [
       { id: 1, name: "Learn React", completed: false, priority: "High" },
@@ -20,7 +22,7 @@ const todoReducer = (state = initialState, action) => {
         case DELETE_TODO: 
             return { 
                 ...state, 
-                dataSource: dataSource.filter((todo) => todo.id !== action.payload)
+                dataSource: state.dataSource.filter((todo) => todo.completed !== true)
             };
         case EDIT_TODO: 
             return { 
@@ -33,13 +35,7 @@ const todoReducer = (state = initialState, action) => {
         case TOGGLE_TODO_STATUS: 
             const currentTodo = state.dataSource.find((todo) => todo.id === action.payload);
             currentTodo.completed = !currentTodo.completed;
-            return { 
-                ...state, 
-                dataSource: [ 
-                    ...state.dataSource, 
-                    currentTodo
-                ]
-            };
+            return state;
         default: return state;
     }
 }

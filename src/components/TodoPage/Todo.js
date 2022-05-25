@@ -1,8 +1,10 @@
 import React from "react";
 import { Row, Tag, Checkbox, Input, Col, Button, Select} from "antd";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { toggleTodoStatus, editTodo } from "../../redux/todoSlice";
+// import { useDispatch } from "react-redux";
+// import { toggleTodoStatus, editTodo } from "../../redux/todoSlice";
+import { toggleTodoStatus, editTodo } from "../../react-redux/actions/todoActions";
+import { connect } from "react-redux";
 
 const priorityColorMapping = {
   High: "red",
@@ -10,15 +12,17 @@ const priorityColorMapping = {
   Low: "gray",
 };
 
-export default function Todo({ name, priority, completed, id }) {
+function Todo(props) {
+  const { name, priority, completed, id } = props;
+  const {toggleTodoStatus, editTodo } = props;
   const [checked, setChecked] = useState(completed);
   const [isEditing, setIsEditing] = useState(false)
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const toggleCheckbox = () => {
     setChecked(!checked);
-    dispatch(toggleTodoStatus(id));
+    toggleTodoStatus(id);
   };
 
   const handleEditClicked = () => {
@@ -27,13 +31,41 @@ export default function Todo({ name, priority, completed, id }) {
 
   return (
     <Row
+      justify='space-between'
+      align='center'
       style={{
-        justify:"space-between",
-        marginBottom: 3,
-        ...(checked ? { opacity: 0.5, textDecoration: "line-through" } : {}),
+        marginTop: 1.5,
+        marginBottom: 1.5,
+        ...(checked ? { opacity: 0.5, textDecoration: 'line-through' } : {}),
       }}
     >
-      {isEditing ? 
+      <Col span={16}>
+        <Checkbox checked={checked} onChange={toggleCheckbox}>
+          {name}
+        </Checkbox>
+      </Col>
+      <Col span={4}>
+        <Tag color={priorityColorMapping[priority]} style={{ margin: 0 }}>
+          {priority}
+        </Tag>
+      </Col>
+      <Col span={4} align='right' justify='center'>
+        <Button type="primary" onClick={handleEditClicked} disabled={checked} >{isEditing ? 'Save' : 'Edit'}</Button>
+      </Col>    
+    </Row>
+  );
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleTodoStatus: (todoID) => dispatch(toggleTodoStatus(todoID)),
+    editTodo: () => dispatch(editTodo())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Todo);
+
+{/* {isEditing ? 
         <Input.Group style={{ display: "flex" }} compact>
           <Input
             type="text"
@@ -58,19 +90,10 @@ export default function Todo({ name, priority, completed, id }) {
           <Button type="primary" onClick={handleEditClicked}>
             Save
           </Button>
-        </Input.Group> : 
-        <Col display="space-between" >
-          <Checkbox checked={checked} onChange={toggleCheckbox}>
-            {name}
-          </Checkbox>
-          <Tag color={priorityColorMapping[priority]} style={{ margin: 0 }}>
-            {priority}
-          </Tag>
-          <Button type="primary" onClick={handleEditClicked} disabled={checked} >{isEditing ? 'Save' : 'Edit'}</Button>
-        </Col>
-      }
-      
-      
-    </Row>
-  );
-}
+        </Input.Group> :  */}
+
+        {/* <Col display="space-between" > */}
+          
+          {/*  */}
+        {/* </Col> */}
+      {/* } */}

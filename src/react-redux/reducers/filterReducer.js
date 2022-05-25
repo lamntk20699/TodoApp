@@ -1,3 +1,5 @@
+import {SEARCH_FILTER_CHANGED, STATUS_FILTER_CHANGED, PRIORITIES_FILTER_CHANGED} from "../actions/actionTypes"
+
 const initialState= {
     searchText: "",
     status: "All",
@@ -5,7 +7,7 @@ const initialState= {
 }
 
 const filterReducer = (state = initialState, action) => {
-    console.log({state, action});
+    // console.log({state, action});
     switch (action.type) {
         case SEARCH_FILTER_CHANGED: 
             return { 
@@ -17,7 +19,7 @@ const filterReducer = (state = initialState, action) => {
                 ...state, 
                 status: action.payload
             };
-        case PRIORITY_FILTER_CHANGED: 
+        case PRIORITIES_FILTER_CHANGED: 
             return { 
                 ...state, 
                 priorities: action.payload
@@ -26,4 +28,4 @@ const filterReducer = (state = initialState, action) => {
     }
 }
 
-export default filterReducer;
+export  default filterReducer;

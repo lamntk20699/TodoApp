@@ -1,37 +1,41 @@
 import React, { useState } from "react";
 import { Col, Row, Input, Typography, Radio, Select, Tag } from "antd";
-import { useDispatch } from "react-redux";
-import {
-  searchFilterChanged,
-  statusFilterChanged,
-  prioritiesFilterChanged,
-} from "../../redux/filterSlice";
+// import { useDispatch } from "react-redux";
+// import {
+//   searchFilterChanged,
+//   statusFilterChanged,
+//   prioritiesFilterChanged,
+// } from "../../redux/filterSlice";
+
+import {searchFilterChanged, statusFilterChanged, prioritiesFilterChanged} from "../../react-redux/actions/filterActions";
+import { connect } from "react-redux";
 
 const { Search } = Input;
 
-export default function Filters() {
+function Filters(props) {
+  const {searchFilterChanged, statusFilterChanged, prioritiesFilter} = props;
   const [searchText, setSearchText] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
   const [filterPriority, setFilterPriority] = useState([]);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleSearchTextChanged = (e) => {
     // console.log({e});
     setSearchText(e.target.value);
-    dispatch(searchFilterChanged(e.target.value));
+    searchFilterChanged(e.target.value);
   };
 
   const handleStatusChanged = (e) => {
     // console.log({e});
     setFilterStatus(e.target.value);
-    dispatch(statusFilterChanged(e.target.value));
+    statusFilterChanged(e.target.value);
   };
 
   const handlePriorityChanged = (value) => {
-    // console.log({e});
+    // console.log({value});
     setFilterPriority(value);
-    dispatch(prioritiesFilterChanged(value));
+    prioritiesFilterChanged(value);
   };
 
   return (
@@ -88,3 +92,13 @@ export default function Filters() {
     </Row>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    searchFilterChanged: (searchText) => dispatch(searchFilterChanged(searchText)),
+    statusFilterChanged: (status) => dispatch(statusFilterChanged(status)),
+    prioritiesFilterChanged: (priorities) => dispatch(prioritiesFilterChanged(priorities))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Filters);

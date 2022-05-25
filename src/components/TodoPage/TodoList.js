@@ -1,29 +1,34 @@
 import React, { useState } from "react";
 import { Col, Row, Input, Button, Select, Tag, Divider } from "antd";
 import Todo from "./Todo";
-import { useDispatch, useSelector } from "react-redux";
-import { addTodo, deleteTodo } from "../../redux/todoSlice";
-import { todoSearchSelector } from "../../redux/selector";
+// import { useDispatch, useSelector } from "react-redux";
+// import { addTodo, deleteTodo } from "../../redux/todoSlice";
+// import { todoSearchSelector } from "../../redux/selector";
+import {addTodo, deleteTodo } from "../../react-redux/actions/todoActions"
+import {connect} from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-export default function TodoList() {
+function TodoList(props) {
   const [todoName, setTodoName] = useState("");
   const [priority, setPriority] = useState("Medium");
 
-  const dispatch = useDispatch();
-  const todoLists = useSelector(todoSearchSelector);
+  // const dispatch = useDispatch();
+  // const todoLists = useSelector(todoSearchSelector);
 
-  axios({
-    method: 'get',
-    url: 'https://627c783ebf2deb7174db0631.mockapi.io/todo/data/accounts/1/todoList',
-    data: null,
-    responseType: 'stream'
-  }).then(res => {
-    console.log(res.data);
-  }).catch(err => {
-    console.log(err);
-  })
+  const todoLists = props.todoLists;
+  const {addTodo, deleteTodo} = props;
+
+  // axios({
+  //   method: 'get',
+  //   url: 'https://627c783ebf2deb7174db0631.mockapi.io/todo/data/accounts/1/todoList',
+  //   data: null,
+  //   responseType: 'stream'
+  // }).then(res => {
+  //   console.log(res.data);
+  // }).catch(err => {
+  //   console.log(err);
+  // })
 
   const handleAddClicked = () => {
     const addedData = {
@@ -33,14 +38,14 @@ export default function TodoList() {
       priority: priority,
     };
 
-    dispatch(addTodo(addedData));
+    addTodo(addedData);
     setTodoName("");
     setPriority("Medium");
   };
 
   const handleDeleteClicked =() => {
     console.log('Deleted');
-    dispatch(deleteTodo());
+    deleteTodo();
   }
 
   return (
@@ -90,3 +95,31 @@ export default function TodoList() {
     </Row>
   );
 }
+
+//mapStateToProps
+const mapStateToProps = (state) => {
+  const dataSource = state.todos.dataSource;
+  const {searchText, status, priorities} = state.filters;
+
+  const todoLists = dataSource.filter((todo) => {
+    if(status === "All") {
+      return todo.name.includes(searchText) && (priorities.length ?  priorities.includes(todo.priority) : true);
+    }
+    return todo.name.includes(searchText) && 
+    (status === "Completed" ? todo.completed : !todo.completed) && 
+    (priorities.length ? priorities.includes(todo.priority) : true)
+  })
+
+  return  {todoLists : todoLists}
+}
+
+//mapDispatchToProps
+const mapDispatchToProps = (dispatch, ownProps) => {
+  console.log({dispatch, ownProps});
+  return {
+    addTodo: (todoItem) => dispatch(addTodo(todoItem)),
+    deleteTodo: () => dispatch(deleteTodo())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
