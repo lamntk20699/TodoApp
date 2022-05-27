@@ -1,4 +1,4 @@
-import {ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO_STATUS} from "./actionTypes";
+import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO_STATUS, FETCH_TODO_LIST } from "./actionTypes";
 
 export const addTodo = (todoItem) => ({
     type: ADD_TODO,
@@ -17,4 +17,9 @@ export const editTodo = (todoItem) => ({
 export const toggleTodoStatus = (todoID) => ({
     type: TOGGLE_TODO_STATUS,
     payload: todoID
+})
+
+export const fetchTodoList = (data) => ({
+    type: FETCH_TODO_LIST,
+    payload: data
 })

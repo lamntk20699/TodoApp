@@ -11,7 +11,7 @@ import filterReducer from "../react-redux/reducers/filterReducer";
 const store = configureStore({
   reducer: {
     todos: todoReducer,
-   filters: filterReducer,
+    filters: filterReducer,
   }
 });
 
