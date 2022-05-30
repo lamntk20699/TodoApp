@@ -1,6 +1,6 @@
 import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO_STATUS, FETCH_TODO_LIST } from "../actions/actionTypes";
-import todoApi from "../../api/todoApi";
-import { fetchTodoList } from "../actions/todoActions";
+// import todoApi from "../../api/todoApi";
+// import { fetchTodoList } from "../actions/todoActions";
 
 const initialState = {
     dataSource: [
@@ -48,9 +48,9 @@ const todoReducer = (state = initialState, action) => {
 
 export default todoReducer;
 
-//Thunk functions
-export async function fetchTodos(dispatch) {
-    const response = await todoApi.get(1);
-    console.log("DataSource", response);
-    dispatch(fetchTodoList(response));
-}
+// Thunk functions
+// export async function fetchTodos(dispatch) {
+//     const response = await todoApi.get(1);
+//     console.log("DataSource", response);
+//     dispatch(fetchTodoList(response));
+// }

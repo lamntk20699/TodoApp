@@ -6,8 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import store from "./app/store";
 import { Provider } from "react-redux";
 
-import { fetchTodos } from "./react-redux/reducers/todoReducer";
-store.dispatch(fetchTodos);
+// import { fetchTodos } from "./react-redux/reducers/todoReducer";
+// store.dispatch(fetchTodos);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

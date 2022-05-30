@@ -1,4 +1,5 @@
 import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO_STATUS, FETCH_TODO_LIST } from "./actionTypes";
+import todoApi from "../../api/todoApi";
 
 export const addTodo = (todoItem) => ({
     type: ADD_TODO,
@@ -23,3 +24,9 @@ export const fetchTodoList = (data) => ({
     type: FETCH_TODO_LIST,
     payload: data
 })
+
+export const setTodos = () => async (dispatch) => {
+    const response = await todoApi.get(1);
+    console.log(response);
+    dispatch(fetchTodoList(response));
+}

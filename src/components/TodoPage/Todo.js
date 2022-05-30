@@ -17,7 +17,7 @@ function Todo(props) {
   const { name, priority, completed, id } = props;
   const { toggleTodoStatus, editTodo } = props;
   const [checked, setChecked] = useState(completed);
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
 
   // const dispatch = useDispatch();
 
@@ -79,10 +79,3 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(null, mapDispatchToProps)(Todo);
 
-
-
-{/* <Col display="space-between" > */ }
-
-{/*  */ }
-{/* </Col> */ }
-{/* } */ }

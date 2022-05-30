@@ -5,9 +5,9 @@ import AddTodoForm from "./AddTodoForm";
 // import { useDispatch, useSelector } from "react-redux";
 // import { addTodo, deleteTodo } from "../../redux/todoSlice";
 // import { todoSearchSelector } from "../../redux/selector";
-import { addTodo, deleteTodo } from "../../react-redux/actions/todoActions";
-import { fetchTodos } from "../../react-redux/reducers/todoReducer";
+import { addTodo, deleteTodo, fetchTodoList, setTodos } from "../../react-redux/actions/todoActions";
 import { connect } from "react-redux";
+import todoApi from "../../api/todoApi";
 // import axios from "axios";
 
 function TodoList(props) {
@@ -16,11 +16,12 @@ function TodoList(props) {
   // const todoLists = useSelector(todoSearchSelector);
 
   const todoLists = props.todoLists;
-  const { addTodo, deleteTodo } = props;
+  const { addTodo, deleteTodo, fetchTodoList, setTodos } = props;
 
-  // useEffect(() => {
-  //   fetchTodos();
-  // }, []);
+  useEffect(() => {
+    // fetchTodoList();
+    setTodos();
+  }, []);
 
   // axios({
   //   method: 'get',
@@ -79,10 +80,17 @@ const mapStateToProps = (state) => {
 
 //mapDispatchToProps
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log({ dispatch, ownProps });
+  console.log("mapDispatchToProps");
   return {
     addTodo: (todoItem) => dispatch(addTodo(todoItem)),
     deleteTodo: () => dispatch(deleteTodo()),
+    fetchTodoList: async () => {
+      // console.log("FETCH");
+      const response = await todoApi.get(1);
+      // console.log(response);
+      dispatch(fetchTodoList(response));
+    },
+    setTodos: () => dispatch(setTodos()),
   }
 }
 
