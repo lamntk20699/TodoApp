@@ -6,10 +6,20 @@ const todoApi = {
         return axiosClient.get(url, { params });
     },
 
-    get: (id) => {
-        const url = `/accounts/${id}/todoList`;
+    get: (accountID) => {
+        const url = `/accounts/${accountID}/todoList`;
         return axiosClient.get(url);
     },
+
+    postTodo: (accountID, data) => {
+        const url = `/accounts/${accountID}/todoList/`;
+        return axiosClient.post(url, data);
+    },
+
+    deleteTodo: (accountID, params) => {
+        const url = `/accounts/${accountID}/todoList`;
+        return axiosClient.delete(url, { params });
+    }
 }
 
 export default todoApi;

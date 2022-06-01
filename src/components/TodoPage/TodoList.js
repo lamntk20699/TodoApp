@@ -5,9 +5,9 @@ import AddTodoForm from "./AddTodoForm";
 // import { useDispatch, useSelector } from "react-redux";
 // import { addTodo, deleteTodo } from "../../redux/todoSlice";
 // import { todoSearchSelector } from "../../redux/selector";
-import { addTodo, deleteTodo, fetchTodoList, setTodos } from "../../react-redux/actions/todoActions";
+import { addTodo, deleteTodo, fetchTodoList } from "../../react-redux/actions/todoActions";
 import { connect } from "react-redux";
-import todoApi from "../../api/todoApi";
+// import todoApi from "../../api/todoApi";
 // import axios from "axios";
 
 function TodoList(props) {
@@ -16,11 +16,12 @@ function TodoList(props) {
   // const todoLists = useSelector(todoSearchSelector);
 
   const todoLists = props.todoLists;
-  const { addTodo, deleteTodo, fetchTodoList, setTodos } = props;
+  const { addTodo, deleteTodo, fetchTodoList } = props;
 
   useEffect(() => {
-    // fetchTodoList();
-    setTodos();
+    fetchTodoList(1);
+    // setTodos();
+    // setTodoList();
   }, []);
 
   // axios({
@@ -36,7 +37,14 @@ function TodoList(props) {
 
   const handleDeleteClicked = () => {
     console.log('Deleted');
-    deleteTodo();
+    const deletedTodoList = [];
+    todoLists.forEach((item) => {
+      if (item.completed === true) {
+        deletedTodoList.push(item.id);
+      }
+    })
+    console.log("List: ", deletedTodoList);
+    deleteTodo(deletedTodoList);
   }
 
   return (
@@ -63,6 +71,7 @@ function TodoList(props) {
 
 //mapStateToProps
 const mapStateToProps = (state) => {
+  console.log("TodoList: mapStateToProps");
   const dataSource = state.todos.dataSource;
   const { searchText, status, priorities } = state.filters;
 
@@ -80,17 +89,18 @@ const mapStateToProps = (state) => {
 
 //mapDispatchToProps
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log("mapDispatchToProps");
+  console.log("TodoList: mapDispatchToProps");
   return {
     addTodo: (todoItem) => dispatch(addTodo(todoItem)),
-    deleteTodo: () => dispatch(deleteTodo()),
-    fetchTodoList: async () => {
-      // console.log("FETCH");
-      const response = await todoApi.get(1);
-      // console.log(response);
-      dispatch(fetchTodoList(response));
-    },
-    setTodos: () => dispatch(setTodos()),
+    deleteTodo: (data) => dispatch(deleteTodo(data)),
+    // fetchTodoList: async () => {
+    //   // console.log("FETCH");
+    //   const response = await todoApi.get(1);
+    //   // console.log(response);
+    //   dispatch(fetchTodoList(response));
+    // },
+    // setTodos: () => dispatch(setTodos()),
+    fetchTodoList: (todoID) => dispatch(fetchTodoList(todoID)),
   }
 }
 

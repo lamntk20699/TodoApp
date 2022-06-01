@@ -71,6 +71,7 @@ function Todo(props) {
 }
 
 const mapDispatchToProps = (dispatch) => {
+  console.log("Todo: mapDispatchToProps");
   return {
     toggleTodoStatus: (todoID) => dispatch(toggleTodoStatus(todoID)),
     editTodo: (todoItem) => dispatch(editTodo(todoItem)),

@@ -7,13 +7,13 @@ import { Col, Row, Input, Typography, Radio, Select, Tag } from "antd";
 //   prioritiesFilterChanged,
 // } from "../../redux/filterSlice";
 
-import {searchFilterChanged, statusFilterChanged, prioritiesFilterChanged} from "../../react-redux/actions/filterActions";
+import { searchFilterChanged, statusFilterChanged, prioritiesFilterChanged } from "../../react-redux/actions/filterActions";
 import { connect } from "react-redux";
 
 const { Search } = Input;
 
 function Filters(props) {
-  const {searchFilterChanged, statusFilterChanged, prioritiesFilterChanged} = props;
+  const { searchFilterChanged, statusFilterChanged, prioritiesFilterChanged } = props;
   const [searchText, setSearchText] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
   const [filterPriority, setFilterPriority] = useState([]);
@@ -94,6 +94,7 @@ function Filters(props) {
 }
 
 const mapDispatchToProps = (dispatch) => {
+  console.log("Filter: mapDispatchToProps");
   return {
     searchFilterChanged: (searchText) => dispatch(searchFilterChanged(searchText)),
     statusFilterChanged: (status) => dispatch(statusFilterChanged(status)),

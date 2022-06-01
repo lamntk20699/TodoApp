@@ -5,6 +5,7 @@ export const EDIT_TODO = "todos/EDIT_TODO";
 export const TOGGLE_TODO_STATUS = "todos/TOGGLE_TODO_STATUS";
 
 export const FETCH_TODO_LIST = "todos/FETCH_TODO_LIST";
+export const SET_TODO_LIST = "todos/SET_TODO_LIST";
 
 //FILTER ACTIONS
 export const SEARCH_FILTER_CHANGED = "todos/SEARCH_FILTER_CHANGED";

@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO_STATUS, FETCH_TODO_LIST } from "../actions/actionTypes";
+import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO_STATUS, SET_TODO_LIST } from "../actions/actionTypes";
 // import todoApi from "../../api/todoApi";
 // import { fetchTodoList } from "../actions/todoActions";
 
@@ -13,7 +13,7 @@ const initialState = {
 const todoReducer = (state = initialState, action) => {
     console.log({ state, action });
     switch (action.type) {
-        case FETCH_TODO_LIST:
+        case SET_TODO_LIST:
             return {
                 ...state,
                 dataSource: action.payload
@@ -29,7 +29,7 @@ const todoReducer = (state = initialState, action) => {
         case DELETE_TODO:
             return {
                 ...state,
-                dataSource: state.dataSource.filter((todo) => todo.completed !== true)
+                dataSource: state.dataSource.filter((todo) => !action.payload.includes(todo.id))
             };
         case EDIT_TODO:
             const newData = action.payload;

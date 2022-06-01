@@ -8,10 +8,11 @@ const AddTodoForm = (props) => {
 
     const handleAddClicked = () => {
         const addedData = {
-            id: props.id || uuidv4(),
             name: todoName,
             completed: false,
             priority: priority,
+            id: props.id || uuidv4(),
+            accountId: '1',
         };
 
         props.btnClicked(addedData);
