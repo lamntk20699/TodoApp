@@ -12,13 +12,18 @@ const todoApi = {
     },
 
     postTodo: (accountID, data) => {
-        const url = `/accounts/${accountID}/todoList/`;
+        const url = `/accounts/${accountID}/todoList`;
         return axiosClient.post(url, data);
     },
 
-    deleteTodo: (accountID, params) => {
-        const url = `/accounts/${accountID}/todoList`;
-        return axiosClient.delete(url, { params });
+    deleteTodo: (accountID, todoID) => {
+        const url = `/accounts/${accountID}/todoList/${todoID}`;
+        return axiosClient.delete(url);
+    },
+
+    editTodo: (accountID, todoID, data) => {
+        const url = `/accounts/${accountID}/todoList/${todoID}`;
+        return axiosClient.put(url, data);
     }
 }
 

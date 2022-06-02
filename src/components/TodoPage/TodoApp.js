@@ -10,11 +10,12 @@ function TodoApp() {
     <div
       style={{
         width: 800,
-        margin: "0 auto",
+        margin: "auto" ,
+        marginTop: 10,
         display: "flex",
         flexDirection: "column",
         backgroundColor: "white",
-        padding: 20,
+        padding: 10,
         boxShadow: "0 0 10px 4px #bfbfbf",
         borderRadius: 5,
         height: "90vh",

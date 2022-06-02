@@ -94,7 +94,7 @@ function Filters(props) {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log("Filter: mapDispatchToProps");
+  // console.log("Filter: mapDispatchToProps");
   return {
     searchFilterChanged: (searchText) => dispatch(searchFilterChanged(searchText)),
     statusFilterChanged: (status) => dispatch(statusFilterChanged(status)),

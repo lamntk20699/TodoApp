@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO_STATUS, SET_TODO_LIST } from "../actions/actionTypes";
+import * as types from "../actions/actionTypes";
 // import todoApi from "../../api/todoApi";
 // import { fetchTodoList } from "../actions/todoActions";
 
@@ -11,14 +11,14 @@ const initialState = {
 }
 
 const todoReducer = (state = initialState, action) => {
-    console.log({ state, action });
+    // console.log({ state, action });
     switch (action.type) {
-        case SET_TODO_LIST:
+        case types.SET_TODO_LIST:
             return {
                 ...state,
                 dataSource: action.payload
             };
-        case ADD_TODO:
+        case types.ADD_TODO:
             return {
                 ...state,
                 dataSource: [
@@ -26,18 +26,18 @@ const todoReducer = (state = initialState, action) => {
                     action.payload
                 ]
             };
-        case DELETE_TODO:
+        case types.DELETE_TODO:
             return {
                 ...state,
                 dataSource: state.dataSource.filter((todo) => !action.payload.includes(todo.id))
             };
-        case EDIT_TODO:
+        case types.EDIT_TODO:
             const newData = action.payload;
             return {
                 ...state,
                 dataSource: state.dataSource.map((todo) => (todo.id === newData.id ? { ...todo, name: newData.name, priority: newData.priority } : todo))
             };
-        case TOGGLE_TODO_STATUS:
+        case types.TOGGLE_TODO_STATUS:
             return {
                 ...state,
                 dataSource: state.dataSource.map((todo) => (todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo))

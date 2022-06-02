@@ -43,7 +43,7 @@ function TodoList(props) {
         deletedTodoList.push(item.id);
       }
     })
-    console.log("List: ", deletedTodoList);
+    // console.log("List: ", deletedTodoList);
     deleteTodo(deletedTodoList);
   }
 
@@ -53,7 +53,7 @@ function TodoList(props) {
         <Button type="primary" onClick={handleDeleteClicked}>Clear All Completed</Button>
       </Col>
       <Divider />
-      <Col span={24} style={{ height: "calc(100% - 90px)", overflowY: "auto" }}>
+      <Col span={24} style={{ height: "calc(100% - 110px)", overflowY: "auto" }}>
         {todoLists.map((todo) => (
           <Todo
             key={todo.id}
@@ -71,7 +71,7 @@ function TodoList(props) {
 
 //mapStateToProps
 const mapStateToProps = (state) => {
-  console.log("TodoList: mapStateToProps");
+  // console.log("TodoList: mapStateToProps");
   const dataSource = state.todos.dataSource;
   const { searchText, status, priorities } = state.filters;
 
@@ -89,7 +89,7 @@ const mapStateToProps = (state) => {
 
 //mapDispatchToProps
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log("TodoList: mapDispatchToProps");
+  // console.log("TodoList: mapDispatchToProps");
   return {
     addTodo: (todoItem) => dispatch(addTodo(todoItem)),
     deleteTodo: (data) => dispatch(deleteTodo(data)),
