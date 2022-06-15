@@ -7,7 +7,7 @@
 import todoReducer from "../react-redux/reducers/todoReducer";
 import filterReducer from "../react-redux/reducers/filterReducer";
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-// import { composeWithDevTools } from "redux-devtools-extension";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 // import thunk from 'redux-thunk';
 
@@ -22,8 +22,6 @@ const rootReducer = combineReducers({
   todos: todoReducer,
   filters: filterReducer,
 });
-
-// // const composedEnhancer = composeWithDevTools();
 
 // const myMiddleware = storeApi => next => action => {
 //   if (action.type === "todos/ADD_TODO" && action.payload.name === "fake") {
@@ -54,9 +52,11 @@ const rootReducer = combineReducers({
 //   return next(action);
 // }
 
+const composedEnhancer = composeWithDevTools(applyMiddleware(sagaMiddleware));
+
 const store = createStore(
   rootReducer,
-  applyMiddleware(sagaMiddleware)
+  composedEnhancer,
 );
 
 sagaMiddleware.run(rootSaga);

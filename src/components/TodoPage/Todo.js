@@ -63,7 +63,7 @@ function Todo(props) {
       }
       {!isEditing &&
         <Col span={4} align='right' justify='center'>
-          <Button type="primary" onClick={handleEditClicked}  >Edit</Button>
+          <Button type="primary" onClick={handleEditClicked} disabled={checked} >Edit</Button>
         </Col>
       }
     </Row>

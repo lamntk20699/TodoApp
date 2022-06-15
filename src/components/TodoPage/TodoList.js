@@ -9,6 +9,8 @@ import { addTodo, deleteTodo, fetchTodoList } from "../../react-redux/actions/to
 import { connect } from "react-redux";
 // import todoApi from "../../api/todoApi";
 // import axios from "axios";
+import * as selectors from "../../redux/selector";
+import { fromJS, Map, List } from "immutable";
 
 function TodoList(props) {
 
@@ -38,12 +40,13 @@ function TodoList(props) {
   const handleDeleteClicked = () => {
     console.log('Deleted');
     const deletedTodoList = [];
+    console.log(todoLists);
     todoLists.forEach((item) => {
       if (item.completed === true) {
         deletedTodoList.push(item.id);
       }
     })
-    // console.log("List: ", deletedTodoList);
+    console.log("List: ", deletedTodoList);
     deleteTodo(deletedTodoList);
   }
 
@@ -71,20 +74,11 @@ function TodoList(props) {
 
 //mapStateToProps
 const mapStateToProps = (state) => {
-  // console.log("TodoList: mapStateToProps");
-  const dataSource = state.todos.dataSource;
-  const { searchText, status, priorities } = state.filters;
 
-  const todoLists = dataSource.filter((todo) => {
-    if (status === "All") {
-      return todo.name.includes(searchText) && (priorities.length ? priorities.includes(todo.priority) : true);
-    }
-    return todo.name.includes(searchText) &&
-      (status === "Completed" ? todo.completed : !todo.completed) &&
-      (priorities.length ? priorities.includes(todo.priority) : true)
-  })
+  const data = selectors.todoSearchSelector(state);
+  // console.log("selector: ", data);
 
-  return { todoLists: todoLists }
+  return { todoLists: data }
 }
 
 //mapDispatchToProps

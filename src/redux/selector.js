@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
+import { toJS } from "immutable";
 
-export const todoListSelector = (state) => state.todoList.dataSource;
+export const todoListSelector = (state) => state.todos.get('todoList').toJS();
 export const searchTextSelector = (state) => state.filters.searchText;
 export const filterStatusSelector = (state) => state.filters.status;
 export const filterPrioritySelector = (state) => state.filters.priorities;
@@ -11,8 +12,8 @@ export const todoSearchSelector = createSelector(
   searchTextSelector,
   filterStatusSelector,
   filterPrioritySelector,
-  (dataSource, searchText, status, priorities) => {
-    return dataSource.filter((todo) => {
+  (todoList, searchText, status, priorities) => {
+    return todoList.filter((todo) => {
       if (status === "All") {
         return priorities.length
           ? todo.name.includes(searchText) && priorities.includes(todo.priority)

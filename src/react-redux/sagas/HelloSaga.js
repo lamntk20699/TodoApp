@@ -51,7 +51,7 @@ export function* removeTodo(action) {
     yield console.log("deleteTodo");
     console.log(action.payload);
     const removeList = action.payload;
-    console.log(Array.isArray(removeList));
+    // console.log(Array.isArray(removeList));
     for (const item of removeList) {
         yield call(deleteData, item);
     }
