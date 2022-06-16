@@ -52,9 +52,10 @@ const todoReducer = (state = initialState, action) => {
         case types.TOGGLE_TODO_STATUS:
             // return {
             //     ...state,
-            //     todoList: state.todoList.map((todo) => (todo.id === action.payload ? { ...todo, completed: !todo.completed } : todo))
+            //     todoList: state.todoList.map((todo) => (todo.id === action.payload.id ? { ...todo, completed: !todo.completed } : todo))
             // }
-            newList = state.get('todoList').map((todo) => (todo.get('id') === action.payload ? todo.set('completed', !todo.get('completed')) : todo));
+            newList = state.get('todoList').map((todo) => (todo.get('id') === action.payload.id ? todo.set('completed', !todo.get('completed')) : todo));
+            console.log(newList);
             return state.set('todoList', newList);
         default: return state;
     }

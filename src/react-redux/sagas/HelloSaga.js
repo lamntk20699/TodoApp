@@ -9,24 +9,45 @@ export function* HelloSaga() {
 
 //Async functions
 async function fetchData(todoID) {
-    const response = await todoApi.get(todoID);
-    return response;
+    try {
+        const response = await todoApi.get(todoID);
+        return response;
+    } catch (err) {
+        console.log(err);
+        return "Fetch Data Failed!";
+    }
 }
 
 async function postData(data) {
-    const response = await todoApi.postTodo(1, data);
-    return response;
+    try {
+        const response = await todoApi.postTodo(1, data);
+        return response;
+    } catch (err) {
+        console.log(err);
+        return "Post Data Failed!"
+    }
 }
 
 async function deleteData(todoID) {
-    const response = await todoApi.deleteTodo(1, todoID);
-    console.log(response);
-    return response;
+    try {
+        const response = await todoApi.deleteTodo(1, todoID);
+        console.log(response);
+        return response;
+    } catch (err) {
+        console.log(err);
+        return "Delete Data Failed!"
+    }
 }
 
 async function editData(todoID, data) {
-    const response = await todoApi.editTodo(1, todoID, data);
-    return response;
+    try {
+        const response = await todoApi.editTodo(1, todoID, data);
+        return response;
+    } catch(err) {
+        console.log(err);
+        alert("Update Data Failed!");
+        return "Update Failed!";
+    }   
 }
 
 //workers
@@ -37,8 +58,8 @@ export function* fetchTodoList(action) {
 }
 
 export function* addTodo(action) {
-    if (action.payload.name === 'fake') {
-        action.payload.name = 'truth';
+    if (action.payload.name.toLowerCase().includes('fake')) {
+        action.payload.name = 'It\'s Truth not Fake';
     }
     // console.log(action);
     // console.log("addTodo Todo: ", action.payload);
@@ -51,9 +72,10 @@ export function* removeTodo(action) {
     yield console.log("deleteTodo");
     console.log(action.payload);
     const removeList = action.payload;
-    // console.log(Array.isArray(removeList));
+    let checkDelete;
     for (const item of removeList) {
-        yield call(deleteData, item);
+        checkDelete = yield call(deleteData, item);
+        if (checkDelete === "Update Failed!") break;
     }
 }
 
@@ -61,6 +83,11 @@ export function* updateTodo(action) {
     yield console.log("updateTodo");
     const response = yield call(editData, action.payload.id, action.payload);
     console.log("updateTodo response:", response);
+}
+
+export function* toggleTodoStatus(action) {
+    const response = yield call(editData, action.payload.id, action.payload);
+    console.log("toggleTodo: ", response);
 }
 
 //watchers
@@ -80,6 +107,10 @@ function* watchUpdateTodo() {
     yield takeEvery(types.EDIT_TODO, updateTodo);
 }
 
+function* watchToggleTodoStatus() {
+    yield takeEvery(types.TOGGLE_TODO_STATUS, updateTodo)
+}
+
 export default function* rootSaga() {
     yield all([
         HelloSaga(),
@@ -87,5 +118,6 @@ export default function* rootSaga() {
         watchAddTodo(),
         watchDeleteTodo(),
         watchUpdateTodo(),
+        watchToggleTodoStatus(),
     ]);
 }

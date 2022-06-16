@@ -2,6 +2,7 @@ import { createSelector } from "reselect";
 import { toJS } from "immutable";
 
 export const todoListSelector = (state) => state.todos.get('todoList').toJS();
+// export const todoListSelector = (state) => state.todos.todoList;
 export const searchTextSelector = (state) => state.filters.searchText;
 export const filterStatusSelector = (state) => state.filters.status;
 export const filterPrioritySelector = (state) => state.filters.priorities;

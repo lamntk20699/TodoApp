@@ -23,7 +23,13 @@ function Todo(props) {
 
   const toggleCheckbox = () => {
     setChecked(!checked);
-    toggleTodoStatus(id);
+    const newTodo = { 
+      id: id, 
+      name: name, 
+      priority: priority,
+      completed: !completed
+    }
+    toggleTodoStatus(newTodo);
   };
 
   const handleEditClicked = () => {
@@ -63,7 +69,7 @@ function Todo(props) {
       }
       {!isEditing &&
         <Col span={4} align='right' justify='center'>
-          <Button type="primary" onClick={handleEditClicked} disabled={checked} >Edit</Button>
+          <Button type="primary" onClick={handleEditClicked} >Edit</Button>
         </Col>
       }
     </Row>
@@ -73,7 +79,7 @@ function Todo(props) {
 const mapDispatchToProps = (dispatch) => {
   // console.log("Todo: mapDispatchToProps");
   return {
-    toggleTodoStatus: (todoID) => dispatch(toggleTodoStatus(todoID)),
+    toggleTodoStatus: (todoItem) => dispatch(toggleTodoStatus(todoItem)),
     editTodo: (todoItem) => dispatch(editTodo(todoItem)),
   }
 }

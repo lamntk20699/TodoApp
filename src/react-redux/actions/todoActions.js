@@ -16,9 +16,9 @@ export const editTodo = (todoItem) => ({
     payload: todoItem
 });
 
-export const toggleTodoStatus = (todoID) => ({
+export const toggleTodoStatus = (todoItem) => ({
     type: types.TOGGLE_TODO_STATUS,
-    payload: todoID
+    payload: todoItem
 })
 
 export const setTodoList = (data) => ({
